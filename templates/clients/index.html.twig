@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ClientsController!{% endblock %}
+
+{% block body %}
+    <div style="text-align:center;">
+        <h1>Clients</h1>
+    </div>
+    <table class="table" id="myTable">
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>ID</th>
+            <th>DPI</th>
+            <th>Name</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+
+        {# table body #}
+        {% for article in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ article.id }}</td>
+                <td>{{ article.dpi }}</td>
+                <td>{{ article.name }}</td>
+                <td>{{ article.lastname }}</td>
+                <td>{{ article.email }}</td>
+                <td>{{ article.phone }}</td>
+                <td>
+                    <div>
+                        <button onclick="window.location.href='{{ path('app_edit_client',{id:article.id}) }}'" class="btn btn-warning">Edit Client</button>
+                        <button onclick="window.location.href='{{ path('app_remove_client',{id:article.id}) }}'" class="btn btn-danger">Delete Client</button>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div style="text-align:center;">
+        <button onclick="window.location.href='{{ path('app_new_client') }}'" class="btn btn-primary">New Client</button>
+    </div>
+
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
+{% endblock %}
